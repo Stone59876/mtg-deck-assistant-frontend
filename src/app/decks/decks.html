@@ -1,0 +1,38 @@
+<header>
+  <img src="/images/logo.png" alt="MTG Logo" class="logo" />
+  <h1 class="title">MTG Deck Assistant</h1>
+</header>
+<div class="decks-header">
+  <h2 class="subtitle">Your Decks</h2>
+  <p class="description">
+    Manage your Magic: The Gathering decks with ease. Click on edit or delete to modify your decks
+    or delete them.
+  </p>
+  <button class="create-button" aria-label="Create" (click)="createDeck()">
+    <span>Create a new deck</span>
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<div class="grid">
+  @for (deck of decks; track deck.id) {
+  <mat-card>
+    <mat-card-content>
+      <mat-card-title>{{ deck.name }}</mat-card-title>
+      <img class="card-image" src="{{ deck.imageUrl }}" alt="Card image" />
+      <mat-card-actions>
+        <button class="edit-button" matFab aria-label="Edit" (click)="editDeck(deck.id)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button class="delete-button" matFab aria-label="Delete" (click)="deleteDeck(deck.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-card-actions>
+      <mat-card-subtitle>Card Count: {{ deck.cardCount }}</mat-card-subtitle>
+    </mat-card-content>
+  </mat-card>
+  } @empty {
+  <div class="no-decks">
+    <p>No decks available.</p>
+  </div>
+  }
+</div>

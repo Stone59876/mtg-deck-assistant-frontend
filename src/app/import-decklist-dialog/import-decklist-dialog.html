@@ -1,0 +1,17 @@
+<div class="import-dialog">
+  <h2 class="dialog-title">Import Decklist</h2>
+
+  <p class="dialog-description">Paste your decklist below.</p>
+
+  <textarea
+    class="decklist-input"
+    [(ngModel)]="decklist"
+    placeholder="1 Sol Ring&#10;1 Arcane Signet&#10;1 Command Tower&#10;..."
+  ></textarea>
+
+  <div class="dialog-actions">
+    <button class="cancel-button" mat-dialog-close>Cancel</button>
+
+    <button class="import-button" [mat-dialog-close]="decklist">Import</button>
+  </div>
+</div>

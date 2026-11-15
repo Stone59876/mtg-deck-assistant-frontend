@@ -1,0 +1,130 @@
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(220px, 0.25fr));
+  justify-content: center;
+  gap: 30px;
+  padding: 0 64px;
+  background-color: #231942;
+}
+.title {
+  text-align: left;
+  font-size: 4rem;
+  color: #e0b1cb;
+}
+mat-card {
+  color: #be95c4;
+  background-color: #5e548e;
+  border-radius: 15px;
+  border: 2px solid #9f86c0;
+  padding-bottom: 14px;
+}
+mat-card-content {
+  position: relative;
+  align-items: center;
+  align-content: space-between;
+  color: #be95c4;
+  border-radius: 15px;
+  background-color: #5e548e;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+mat-card-subtitle {
+  color: #e7c6ff;
+  text-align: center;
+  font-size: 1.2rem;
+}
+mat-card-title {
+  color: #e0b1cb;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  padding-top: 14px;
+  min-height: 50px;
+}
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+.card-image {
+  height: auto;
+  width: 80%;
+  max-width: 200px;
+  border-radius: 5%;
+  box-shadow:
+    inset 0 0 10px #66478f,
+    0 0 10px #120624;
+}
+.no-decks {
+  text-align: center;
+  font-size: 1.5rem;
+  color: rgba(56, 6, 71, 0.781);
+}
+.logo {
+  display: block;
+  width: 150px;
+}
+button {
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #944bbb;
+}
+.edit-button {
+  color: #ffd6ff;
+}
+.delete-button {
+  color: #d55d92;
+}
+.create-button {
+  position: absolute;
+  right: 64px;
+  bottom: 0;
+
+  color: #cbaed8;
+
+  width: 200px;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  font-size: 1rem;
+  border-radius: 12px;
+}
+.create-button mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.edit-button,
+.delete-button {
+  border-radius: 35%;
+}
+header {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+  gap: 35px;
+  background-color: #231942;
+}
+.subtitle {
+  text-align: center;
+  font-size: 3.5rem;
+  color: #ecbcfd;
+  margin-top: 20px;
+  margin-bottom: 40px;
+}
+.description {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #dac3e8;
+  margin-bottom: 40px;
+}
+.decks-header {
+  position: relative;
+  width: 100%;
+}

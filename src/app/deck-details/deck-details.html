@@ -1,0 +1,174 @@
+<header>
+  <img src="/images/logo.png" alt="MTG Logo" class="logo" />
+  <h1 class="title">MTG Deck Assistant</h1>
+</header>
+<div class="deck-details-container">
+  <button class="back-button" aria-label="Back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <div class="top-container">
+    <div class="deck-info">
+      <p class="description">Edit your deck</p>
+      <div class="deck-title">
+        @if (!this.deckNameEditing) {
+        <h1 class="subtitle">{{ deck.name }}</h1>
+        <button class="edit" (click)="editName()"><mat-icon>edit</mat-icon></button>
+        } @else {
+        <input
+          class="deck-name-input"
+          type="text"
+          [value]="this.deck.name"
+          id="deckName"
+          [(ngModel)]="deckName"
+        />
+        <button class="save" (click)="editName()"><mat-icon>save</mat-icon></button>
+        }
+      </div>
+      <img class="card-image" src="{{ deck.imageUrl }}" alt="Card image" />
+      <p class="total-cards">{{ deck.slots.length }} cards</p>
+      @if (deck.slots.find((slot) => slot.id === commanderCardId); as commander) {
+      <h2 class="subtitle">Commander</h2>
+      <img
+        class="commander-card-preview"
+        [src]="getCardImageUrlByName(commander.cardName)"
+        alt="Commander Card Image"
+        (click)="selectCard(commander.cardName)"
+        onerror="this.src = '/images/placeholder.png'"
+      />
+      }
+      <!--  <p>for deck with ID: {{ deckId }}</p>-->
+      <div class="validate-container">
+        <p class="validate-text">Validate this deck</p>
+        <button class="validate" (click)="validateDeck()"><mat-icon>check</mat-icon></button>
+      </div>
+    </div>
+    <div class="suggestion-container">
+      <h2 class="subtitle">Suggestions</h2>
+      <label class="suggestion-prompt-label">Suggestion Prompt :</label>
+      <textarea
+        id="suggestion-prompt"
+        [(ngModel)]="suggestionPrompt"
+        placeholder="I need more ramps..."
+        class="prompt-input"
+      ></textarea>
+      <button mat-raised-button class="suggestion-button" (click)="getSuggestions()">
+        Get Suggestions
+      </button>
+      @if (suggestionPack !== null) {
+      <div class="pack-carousel">
+        @if (this.suggestionPack.length > 5) {
+        <button class="carousel-button" (click)="scrollPacks(-1)">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        }
+        <div class="pack-suggestion" #packContainer>
+          @for (pack of suggestionPack; track pack.name) {
+          <div class="pack-content" (click)="getSuggestionsDetails(pack.name)">
+            <h3>{{ pack.name }}</h3>
+            <p>{{ pack.cards.length }} cards</p>
+          </div>
+          }
+        </div>
+        @if (this.suggestionPack.length > 5) {
+        <button class="carousel-button" (click)="scrollPacks(1)">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        }
+        <button class="hide-suggestions" (click)="hideSuggestions()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      @if (suggestions !== null) {
+      <div class="suggestions">
+        <h3>{{ this.selectedSuggestion?.name }}</h3>
+        <p class="pack-description">{{ this.selectedSuggestion?.description }}</p>
+        @for (card of suggestions; track card.cardName) {
+        <div class="suggestion-item">
+          <img
+            class="suggestion-card"
+            src="{{ getCardImageUrlByName(card.cardName) }}"
+            alt="Selected Card Image"
+            onerror="this.src = '/images/placeholder.png'"
+            (click)="selectCard(card.cardName)"
+          />
+        </div>
+        }
+      </div>
+      } }
+    </div>
+    <div class="card-info">
+      @if (selectedCardName !== null) {
+      <div class="preview-card">
+        <p class="card-name">{{ selectedCardName }}</p>
+        <img
+          class="card-image-preview"
+          src="{{ getCardImageUrlByName(selectedCardName) }}"
+          alt="Selected Card Image"
+          onerror="this.src = '/images/placeholder.png'"
+        />
+        <div class="quantity-box">
+          <p class="card-quantity">{{ selectedQuantity }}</p>
+        </div>
+      </div>
+      <div class="button-quantity">
+        <button class="cancel" (click)="deselectCard()"><mat-icon>close</mat-icon></button>
+        <button class="add" (click)="addQuantity()"><mat-icon>add</mat-icon></button>
+        <button class="remove" (click)="removeQuantity()"><mat-icon>remove</mat-icon></button>
+        <button class="setcommander" (click)="setCommander()"><mat-icon>crown</mat-icon></button>
+        <button class="setdeckimage" (click)="setAsImage()">
+          <mat-icon>add_a_photo</mat-icon>
+        </button>
+      </div>
+      }
+    </div>
+  </div>
+  <div class="deck-details-section">
+    <h2 class="subtitle">Deck Details</h2>
+    <div class="deck-actions">
+      <input
+        type="text"
+        id="addedCard"
+        [(ngModel)]="addedCard"
+        placeholder="Search cards..."
+        class="search-input"
+      />
+      <button class="add-card-button" (click)="addCard()">Add Card</button>
+      <button class="import-decklist" (click)="importDecklist()">Import decklist</button>
+    </div>
+  </div>
+
+  <div class="categories-container">
+    @for (slot of deckSlot; track slot.name) { @if (slot.cards.length > 0) {
+    <div class="category-container">
+      <h3 class="subtitle">{{ slot.name }}</h3>
+      <h3 class="category-card-quantity">{{ slot.cards.length }} cards</h3>
+      <ul>
+        <!--
+        <li class="card-header">
+          <span>Name </span>
+          <span>Qty </span>
+        </li>-->
+        @for (card of slot.cards; track card.id) { @if (card.id == this.commanderCardId) {
+        <mat-icon>crown</mat-icon>
+        }
+        <div class="deck-card-item">
+          <img
+            class="deck-card"
+            src="{{ getCardImageUrlByName(card.cardName) }}"
+            alt="Deck Card Image"
+            onerror="this.src = '/images/placeholder.png'"
+            (click)="selectCard(card.cardName)"
+          />
+          <p class="card-quantity-badge">{{ card.quantity }}</p>
+        </div>
+        <!--
+        <li class="card-info-text" (click)="selectCard(card.cardName)">
+          <span>{{ card.cardName }}</span>
+          <span>{{ card.quantity }}</span>
+        </li> -->
+        }
+      </ul>
+    </div>
+    } }
+  </div>
+</div>

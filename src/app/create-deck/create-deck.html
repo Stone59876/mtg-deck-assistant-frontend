@@ -1,0 +1,22 @@
+<header>
+  <img src="/images/logo.png" alt="MTG Logo" class="logo" />
+  <h1 class="title">MTG Deck Assistant</h1>
+</header>
+<div class="create-deck-container">
+  <h1 class="title">Create a new deck</h1>
+  <button class="back-button" aria-label="Back" (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+  <label>Deck Name</label>
+  <input type="text" id="deck-name" />
+  <label>Deck Format</label>
+  <select name="format" id="format-select">
+    <option value="">--Please choose an option--</option>
+    <option value="commander">Commander</option>
+    <option value="draft">Draft</option>
+    <option value="standard">Standard</option>
+    <option value="sealed">Sealed</option>
+    <option value="pauper">Pauper</option>
+  </select>
+  <button class="validate" (click)="createNewDeck()">Create a new deck</button>
+</div>
